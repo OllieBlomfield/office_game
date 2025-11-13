@@ -20,6 +20,7 @@ function plr_init(x,y)
     jumpheld = false,
     grounded = true,
     jumpfrc = 1.7,
+    jmp_buffer = 0,
     gravity = NORMAL_GRAVITY,
     spd = 0.5,
     no_stop_delay = 0,
@@ -90,7 +91,9 @@ function plr_move_state()
 
   if t%20>14 and plr.grounded then add_dust(plr.x+3,plr.y+8) end
 
-  if btnp(4) and not plr.jumping and plr.grounded then --doesnt check grounded
+  if btnp(4) then plr.jmp_buffer = 6 else plr.jmp_buffer -= 1 end
+
+  if plr.jmp_buffer>0 and not plr.jumping and plr.grounded then --doesnt check grounded
     add_dust(plr.x,plr.y+8)
     add_dust(plr.x+7,plr.y+8)
     plr.jumping = true

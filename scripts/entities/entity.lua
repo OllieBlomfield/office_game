@@ -4,3 +4,7 @@ function damage_plr_on_hit(e)
         plr_damage()
     end
 end
+
+function entity_update()
+    for e in all(entities) do e.update(e) end
+end

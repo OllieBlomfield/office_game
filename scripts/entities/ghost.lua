@@ -2,7 +2,7 @@ function add_ghost(x,y)
     add(entities,{
         x=x,
         y=y,
-        h=8,
+        h=7,
         w=8,
         origin_y=y,
         update=ghost_update,
