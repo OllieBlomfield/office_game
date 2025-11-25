@@ -25,6 +25,11 @@ function menu_draw()
     -- for i=1,#options do
     --     print(options[i],26,72,1)
     -- end
+    fillp(░)
+    poke(0x5f34,0x2)
+    circfill(64,67,70,0 | 0x1800)
+    fillp()
+    center_print("x to continue", 80, 7,"\^o0ff")
     draw_logo()
     draw_foreground()
 end

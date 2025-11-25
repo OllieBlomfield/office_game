@@ -22,7 +22,7 @@ function spike_update(e)
     if e.state==1 and not coll(plr,e) then
         --add_splurt(e.x+4,e.y+5)
         e.state=2
-        e.attack_time=180
+        e.attack_time=160
     end
 
     if e.state==2 and e.attack_time==0 then

@@ -16,5 +16,6 @@ function ghost_update(e)
 end
 
 function ghost_draw(e)
-    spr(sin(t/300)>0 and 20 or 21,e.x,e.y)
+    spr(cos(t/260) > 0 and 20 or 22,e.x,e.y)
+    sspr(40,t%30>15 and 9 or 11,8,2,e.x,e.y+6)
 end

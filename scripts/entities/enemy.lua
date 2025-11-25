@@ -1,4 +1,4 @@
-ENEMY_SPEED = 0.1
+ENEMY_SPEED = 0.15
 
 function add_enemy(x,y, start_dir)
     add(entities,{

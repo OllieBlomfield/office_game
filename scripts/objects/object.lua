@@ -10,6 +10,8 @@ function scan_map()
                 add_enemy(sx*8,sy*8,s==17 and 1 or -1)
             elseif s==20 then
                 add_ghost(sx*8,sy*8)
+            elseif s==60 then
+                add_break_block(sx*8,sy*8)
             elseif s==64 then
                 add_key(sx*8,sy*8)
             end

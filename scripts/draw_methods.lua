@@ -1,5 +1,7 @@
 function set_pal()
   fillp()
+  poke( 0x5f2e, 1)
+  pal(0,1,1)
   pal(1,129,1)
   pal(2,136,1)
   pal(5,134,1)
@@ -49,4 +51,13 @@ function draw_debug()
   for o in all(objects) do
     rect(o.x,o.y,o.x+o.w,o.y+o.h,11)
   end
+end
+
+function center_print(txt,y,c,highlight, border)
+  border = false or border
+  highlight = highlight or ""
+  local text_width = #txt * 4
+  local x = (128 - text_width) / 2
+  if border then rrectfill(x-1,y-1,text_width+1,7,1,6) end
+  print(highlight..txt, x, y, c)
 end

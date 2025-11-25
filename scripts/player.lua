@@ -57,6 +57,8 @@ function plr_draw()
     if plr.dy==0 then
       sp = ({33,34,35,34})[1+(t%60\15)]
     end
+  -- elseif plr.state==0 then
+  --   sp = ({32,34})[1+(t%60\30)]
   end
 
   --if running out of sprite space, draw both walking sprites at same position

@@ -1,10 +1,12 @@
 levels = {}
-levels[1] = {{16,112}, {104,8}, function() end}
-levels[2] = {{16,112}, {16,8}}
-levels[3] = {{16,112}, {104,16}}
-levels[4] = {{9,112}, {110,8}}
-levels[5] = {{9,112}, {10,8}}
-levels[6] = {{9,112}, {16,8}}
+levels[1] = {{16,112}, {104,8}, "simple enough",20}
+levels[2] = {{16,112}, {12,8}, "stop n' start",20}
+levels[3] = {{16,112}, {104,16}, "grab the key!",20}
+levels[4] = {{9,112}, {110,8}, "don't stop",20}
+levels[5] = {{9,112}, {10,8}, "rebound",20}
+levels[6] = {{61,112}, {86,24}, "ghosts n' ghouls",20}
+levels[7] = {{16,112}, {110,24}, "fragile stuff",20}
+levels[8] = {{16,64}, {10,104}, "end of demo :)",20} --at 3 possible stars for beating level in certain time
 
 function reset_level() --fix mx and my
     level_state = 0 --0 intro, 1 playing, 2 clear
@@ -20,11 +22,15 @@ function reset_level() --fix mx and my
     level_cleared = false
     level_anim_start_time = t
     level_anim_time = 0
+
+    timer_start_time = time()
+    timer = time()
     scan_map()
-    if current_lvl[3] then
-        current_lvl[3]()
-    end
-    --add_enemy(40,40)
+    
+    -- if current_lvl[3] then
+    --     current_lvl[3]()
+    -- end
+    add_level_title(current_lvl[3])
     add_exit(current_lvl[2][1],current_lvl[2][2])
 end
 
@@ -60,6 +66,10 @@ function level_play()
 end
 
 function level_outro()
+  -- if plr.visible then
+  --   plr.visible = false
+  --   add_pop(plr.x+4,plr.y+4)
+  -- end
   level_anim_time = level_anim_start_time - t
   if level_anim_time < -2 then
     if level_cleared then
@@ -78,6 +88,9 @@ end
 
 function level_update()
     t+=1
+
+    timer = time() - timer_start_time
+
     if level_state==0 then
       level_intro()
     elseif level_state==1 then
@@ -95,9 +108,11 @@ function level_draw()
     cls(7)
     draw_background()
     rect(0,0,127,127,1)
+
+    for p in all(particles) do p.draw(p) end
     map(mx,my,0,0,16,16,127)
     
-    for p in all(particles) do p.draw(p) end
+    
     for e in all(entities) do e.draw(e) end
     if plr.visible then plr_draw() end
     
@@ -112,11 +127,11 @@ function level_draw()
       --fillp(░)
       poke(0x5f34,0x2)
       for i=1,5 do
-        circfill(plr.x+3,plr.y+3,i*0.08*level_anim_time*level_anim_time, ({8,11,12,14,1})[i] | 0x1800)
+        circfill(plr.x+3,plr.y+3,i*0.08*level_anim_time*level_anim_time, ({8,11,12,10,1})[i] | 0x1800)
       end
     end
     --circfill(plr.x+3, plr.y+3, 2, 0 | 0x1800)
-
+    print(timer,10,10,0)
 
     draw_foreground()
 end

@@ -15,8 +15,8 @@ function add_exit(x,y)
     add(entities,{
         x=x,
         y=y,
-        w=12,
-        h=12,
+        w=8,
+        h=16,
         update=exit_update,
         draw=exit_draw,
         --particles=temp_particles,
@@ -26,7 +26,7 @@ end
 
 function exit_update(e)
     e.active = (not level_has_key) or (level_has_key and key_collected)
-    if coll(plr,e) then
+    if coll(plr,e) and e.active then
         next_level()
     end
 end
@@ -54,41 +54,40 @@ end
 
 function exit_draw(e)
     if e.active then
-        for i=6,2,-1 do
-            rr = rrectfill
-            if i==5 then
-                rr=rrect
-            end
-            local c = i==5 and 1 or 0
-            i = min(i,5)
-            -- r = i*0.05*(t%120)
-            -- circfill(e.x+4,e.y+8,r/2,({8,11,12,14,1})[flr(r)\2])
+        
+        clip(e.x,e.y,e.w,e.h)
+        for i=7,2,-1 do
             local cl = flr(t/20)
-            -- circfill(e.x+4,e.y+8,i*2,({8,11,12,14,1})[(c-i)%5+1])
-            -- local x = e.x + 4 + 3*cos((t+3*i)/80)
-            -- local y = e.y + 8 + 3*sin((t+3*i)/80)
-            -- circfill(x,y,i*3,({7,8,7,6,8})[i])
-
-            local x = e.x + 6 - i*2 + 3*cos((t+3*i)/120)
-            local y = e.y + 6 - i*2 + 3*sin((t+3*i)/120)
-            rr(
+            --local c = i==1 and 1 or i==2 and 7 or ({8,9,2})[(cl-i)%3+1]
+            local c = ({8,9,2})[(cl-i)%3+1]
+            --{8,9,2}{11,8,12}
+            local x_center = e.x+e.w\2
+            local y_center = e.y+e.h\2
+            local x = x_center + 1 - i*2 + 3*cos((t+3*i)/120)
+            local y = y_center + 6 - i*3 + 3*sin((t+3*i)/120)
+            rrectfill(
                 x,
                 y,
-                2*sin((t+3*i)/120)+i*4,
-                2*cos((t+3*i)/120)+i*4,
+                2*sin((t+3*i)/120)+4*i,
+                2*cos((t+3*i)/120)+4*i,
                 6,
-                ({1,7,10,9,8,2})[(cl-i)%5+1]
+                c
             )
-            -- circfill(
-            --     x,
-            --     y,
-            --     2*sin((t+3*i)/120)+i*4,
-            --     ({1,7,10,9,8,2})[i + c]
-            -- )
-            --{7,8,7,8,2,1}
-            --circfill(x,y,i*3,({7,8,7,6,8})[i])
         end
+        clip()
+        spr(21,e.x,e.y-1,1,0.125)
+        rrect(e.x,e.y,e.w,e.h+1,0,1)
+        rrect(e.x,e.y,e.w,e.h+1,2,1)
+        -- local x_center = e.x+e.w\2
+        -- local y_center = e.y+e.h\2
+        -- circfill(x_center,y_center,9,8)
+        -- local eye_off_x, eye_off_y =-(e.x-plr.x)/25, -(e.y-plr.y)/25
+        -- --circfill(e.x + eye_off_x, e.y + eye_off_y, 3, 1)
+        -- spr(14,x_center+eye_off_x,y_center+eye_off_y)
     else
-        spr(65,e.x,e.y,1,2)
+        spr(21,e.x,e.y-1,1,0.125)
+        rrect(e.x,e.y,e.w,e.h+1,0,1)
+        rrect(e.x,e.y,e.w,e.h+1,2,1)
+        spr(65,e.x,e.y+1,1,2)
     end
 end
