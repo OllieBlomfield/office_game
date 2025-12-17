@@ -11,7 +11,7 @@ function plr_init(x,y)
     dy=0,
     h=8,
     w=6,
-    dir = 1,
+    dir = x < 64 and 1 or -1,
     state = 0, --0 still, 1 moving, 2 death
     death_state = 0, --0 start, 1 shaking, 2 explode, 3 done
     death_anim_start_time = 0,
@@ -19,6 +19,7 @@ function plr_init(x,y)
     jumping = false,
     jumpheld = false,
     grounded = true,
+    already_hit_on_y = false,
     jumpfrc = 1.7,
     jmp_buffer = 0,
     gravity = NORMAL_GRAVITY,
@@ -66,6 +67,7 @@ function plr_draw()
 end
 
 function handle_gravity()
+  plr.already_hit_on_y = false
   if plr.jumpheld then
     plr.gravity = SLOW_GRAVITY
   else
@@ -77,6 +79,7 @@ function handle_gravity()
   end
 
   if (collide_map(plr,"down",1) or plr.y+plr.h>=127) and plr.dy <= 0 then
+    if not plr.grounded then plr.already_hit_on_y = true end
     plr.dy = 0
     plr.y-=((plr.y+plr.h+1)%8)-1
     plr.grounded = true
@@ -112,10 +115,10 @@ function plr_move_state()
   end
 
 
-  if collide_map(plr,"left",0) or plr.x<0 then
+  if (collide_map(plr,"left",0) and not plr.already_hit_on_y) or plr.x<0 then
       plr.dir=1
   end
-  if collide_map(plr,"right",0) or plr.x>128-plr.w then
+  if (collide_map(plr,"right",0) and not plr.already_hit_on_y) or plr.x>128-plr.w then
       plr.dir=-1
   end
   

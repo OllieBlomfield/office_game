@@ -21,12 +21,13 @@ function add_exit(x,y)
         draw=exit_draw,
         --particles=temp_particles,
         active=true,
+        box={x=x+1,y=y+4,w=6,h=11}
     })
 end
 
 function exit_update(e)
     e.active = (not level_has_key) or (level_has_key and key_collected)
-    if coll(plr,e) and e.active then
+    if coll(plr,e.box) and e.active then
         next_level()
     end
 end
@@ -59,7 +60,7 @@ function exit_draw(e)
         for i=7,2,-1 do
             local cl = flr(t/20)
             --local c = i==1 and 1 or i==2 and 7 or ({8,9,2})[(cl-i)%3+1]
-            local c = ({8,9,2})[(cl-i)%3+1]
+            local c = ({8,9,8})[(cl-i)%3+1]
             --{8,9,2}{11,8,12}
             local x_center = e.x+e.w\2
             local y_center = e.y+e.h\2

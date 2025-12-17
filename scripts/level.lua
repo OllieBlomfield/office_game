@@ -1,17 +1,21 @@
 levels = {}
-levels[1] = {{16,112}, {104,8}, "simple enough",20}
-levels[2] = {{16,112}, {12,8}, "stop n' start",20}
-levels[3] = {{16,112}, {104,16}, "grab the key!",20}
-levels[4] = {{9,112}, {110,8}, "don't stop",20}
-levels[5] = {{9,112}, {10,8}, "rebound",20}
-levels[6] = {{61,112}, {86,24}, "ghosts n' ghouls",20}
-levels[7] = {{16,112}, {110,24}, "fragile stuff",20}
-levels[8] = {{16,64}, {10,104}, "end of demo :)",20} --at 3 possible stars for beating level in certain time
+levels[1] = {{16,112}, {104,8}, "just a bit of jumping",20}
+levels[2] = {{16,112}, {104,8}, "now spikes",20}
+levels[3] = {{16,112}, {12,8}, "stop n' start",20}
+levels[4] = {{16,112}, {104,16}, "grab the key!",20}
+levels[5] = {{9,112}, {110,8}, "don't stop",20}
+levels[6] = {{9,112}, {10,8}, "rebound",20}
+levels[7] = {{61,112}, {86,24}, "ghosts n' ghouls",20}
+levels[8] = {{16,112}, {110,24}, "fragile stuff",20}
+levels[9] = {{16,64}, {10,104}, "end of demo :)",20}
+levels[10] = {{104,104}, {12,8}, "hot stuff",20}
+levels[11] = {{16,64}, {10,104}, "test2",20}
+levels[12] = {{16,64}, {10,104}, "test",20} --at 3 possible stars for beating level in certain time
 
 function reset_level() --fix mx and my
     level_state = 0 --0 intro, 1 playing, 2 clear
-    mx = (lvl-1)*16
-    my = (lvl-1)\16
+    mx = ((lvl-1)%8)*16
+    my = 48*((lvl-1)\8)
     current_lvl=levels[lvl]
     objects = {}
     entities = {}
@@ -24,7 +28,7 @@ function reset_level() --fix mx and my
     level_anim_time = 0
 
     timer_start_time = time()
-    timer = time()
+    level_timer = 0
     scan_map()
     
     -- if current_lvl[3] then
@@ -54,6 +58,7 @@ function level_intro()
 end
 
 function level_play()
+  level_timer = time() - timer_start_time
   plr_update()
   entity_update()
   for p in all(particles) do
@@ -88,8 +93,6 @@ end
 
 function level_update()
     t+=1
-
-    timer = time() - timer_start_time
 
     if level_state==0 then
       level_intro()
@@ -131,7 +134,7 @@ function level_draw()
       end
     end
     --circfill(plr.x+3, plr.y+3, 2, 0 | 0x1800)
-    print(timer,10,10,0)
+    --print(timer,10,10,0)
 
-    draw_foreground()
+    --draw_foreground()
 end

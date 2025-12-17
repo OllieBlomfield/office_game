@@ -1,37 +1,66 @@
 function menu_init()
     update = menu_update
     draw = menu_draw
-
+    
+    fade_in = 20
     options = {"play"}
     logo_offset_y = 0
-    menu_state = 1 --0 credits, 1 logo, 2 game transition
+    new_game = false
+    menu_state = 1 --0 credits, 1 logo, 2 game transition, 3 intro transition
+    menu_credit_fade_state = 0 --0 fade_in, 1 fade out
+
+    --intro_transition vars
+    intro_transition_time = 0
+    intro_circle_size = 110
 end
 
 function menu_update()
-    if menu_state==1 then
-        if btnp(4) then menu_state = 2 end
+    if menu_state==0 then
+        if menu_credit_fade_state==0 then
+            fade_in = max(-15,fade_in-0.5)
+            if fade_in==-15 then
+                menu_credit_fade_state = 1
+            end
+        elseif menu_credit_fade_state==1 then
+            fade_in = min(20,fade_in+0.5)
+            if fade_in==20 then
+                menu_state=1
+            end
+        end
+    elseif menu_state==1 then
+        fade_in = max(0, fade_in-0.5)
+        if btnp(4) and fade_in==0 then menu_state = new_game and 3 or 2 end
     elseif menu_state==2 then
         logo_offset_y-=6
         if logo_offset_y < -60 then
             level_init()
+        end
+    elseif menu_state==3 then
+        intro_transition_time+=1
+        intro_circle_size = lerp(95,-2,intro_transition_time/100)
+        if intro_transition_time > 100 then
+            intro_init()
         end
     end
 end
 
 function menu_draw()
     cls(1)
-    -- rrect(22,68,84,54,6,7)
-    -- rrectfill(24,70,80,50,6)
-    -- for i=1,#options do
-    --     print(options[i],26,72,1)
-    -- end
-    fillp(░)
-    poke(0x5f34,0x2)
-    circfill(64,67,70,0 | 0x1800)
-    fillp()
-    center_print("x to continue", 80, 7,"\^o0ff")
-    draw_logo()
-    draw_foreground()
+    fade(max(0,fade_in))
+    if menu_state==0 then
+        center_print("by ob",60,7,"\^o0ff")
+    elseif menu_state>=1 then
+        fillp(░)
+        poke(0x5f34,0x2)
+        circfill(64,67,70,0 | 0x1800)
+        fillp()
+        center_print("x to "..(new_game and "start" or "continue"), 80, 7,"\^o0ff")
+        draw_logo()
+        circfill(63,63,intro_circle_size,1 | 0x1800)
+        circ(63,63,intro_circle_size - 1 , 7)
+    end
+
+    
 end
 
 function draw_logo()

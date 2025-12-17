@@ -1,5 +1,6 @@
 function set_pal()
   fillp()
+  pal()
   poke( 0x5f2e, 1)
   pal(0,1,1)
   pal(1,129,1)
@@ -45,11 +46,49 @@ function draw_debug()
   print(mx)
   print(my)
   print(lvl)
+  print(level_timer)
   for e in all(entities) do
-    rect(e.x,e.y,e.x+e.w,e.y+e.h,11)
+    if e.box then
+      rrect(e.box.x,e.box.y,e.box.w,e.box.h)
+    else
+      rect(e.x,e.y,e.x+e.w,e.y+e.h,11)
+    end
   end
   for o in all(objects) do
     rect(o.x,o.y,o.x+o.w,o.y+o.h,11)
+  end
+end
+
+function spr_r(s,x,y,a,w,h)
+ sw=(w or 1)*8
+ sh=(h or 1)*8
+ sx=(s%8)*8
+ sy=flr(s/8)*8
+ x0=flr(0.5*sw)
+ y0=flr(0.5*sh)
+ a=a/360
+ sa=sin(a)
+ ca=cos(a)
+ for ix=0,sw-1 do
+  for iy=0,sh-1 do
+   dx=ix-x0
+   dy=iy-y0
+   xx=flr(dx*ca-dy*sa+x0)
+   yy=flr(dx*sa+dy*ca+y0)
+   if (xx>=0 and xx<sw and yy>=0 and yy<=sh) then
+    local col = sget(sx+xx,sy+yy)
+    if col!=4 then
+      pset(x+ix,y+iy,col)
+    end
+   end
+  end
+ end
+end
+
+function para_print(txt,y,c,highlight,border)
+  local line_length = 20
+  for i=0,#txt\line_length do
+    center_print(sub(txt,1+20*i,20*(i+1)),y+i*6,c,highlight,border)
   end
 end
 
@@ -59,5 +98,5 @@ function center_print(txt,y,c,highlight, border)
   local text_width = #txt * 4
   local x = (128 - text_width) / 2
   if border then rrectfill(x-1,y-1,text_width+1,7,1,6) end
-  print(highlight..txt, x, y, c)
+  return print(highlight..txt, x, y, c)
 end
