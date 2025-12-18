@@ -1,5 +1,13 @@
 levels = {}
-levels[1] = {{16,112}, {104,8}, "just a bit of jumping",20}
+levels[1] = {{10,112}, {104,8}, "just a bit of jumping",20, 
+function() 
+  print("TAP❎",10,97,13)
+  draw_curve({28,116},{40,82},{52,108},10,13)
+  print("HOLD❎",58,97,13)
+  draw_curve({76,116},{90,76},{100,92},10,13)
+  print("EXIT",80,13)
+  spr(68,96,13)
+end}
 levels[2] = {{16,112}, {104,8}, "now spikes",20}
 levels[3] = {{16,112}, {12,8}, "stop n' start",20}
 levels[4] = {{16,112}, {104,16}, "grab the key!",20}
@@ -112,6 +120,7 @@ function level_draw()
     draw_background()
     rect(0,0,127,127,1)
 
+    if current_lvl[5] then current_lvl[5]() end
     for p in all(particles) do p.draw(p) end
     map(mx,my,0,0,16,16,127)
     
@@ -122,6 +131,8 @@ function level_draw()
     if debug_menu then
       draw_debug()
     end
+
+    
     --print(plr.state)
     --print(#objects)
     

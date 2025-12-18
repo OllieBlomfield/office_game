@@ -3,6 +3,7 @@ function plr_init(x,y)
   NORMAL_GRAVITY = 0.14
   MAX_Y_VELOCITY = 2
   NO_STOP_AMOUNT = 33
+  COYOTE_TIME = 12
   
   plr = {
     x=x,
@@ -22,6 +23,7 @@ function plr_init(x,y)
     already_hit_on_y = false,
     jumpfrc = 1.7,
     jmp_buffer = 0,
+    coy_time = 0,
     gravity = NORMAL_GRAVITY,
     spd = 0.5,
     no_stop_delay = 0,
@@ -76,6 +78,9 @@ function handle_gravity()
 
   if not plr.grounded then
     plr.dy = max(plr.dy - plr.gravity, -MAX_Y_VELOCITY)
+    plr.coy_time -= 1
+  else
+    plr.coy_time = COYOTE_TIME
   end
 
   if (collide_map(plr,"down",1) or plr.y+plr.h>=127) and plr.dy <= 0 then
@@ -98,7 +103,7 @@ function plr_move_state()
 
   if btnp(4) then plr.jmp_buffer = 6 else plr.jmp_buffer -= 1 end
 
-  if plr.jmp_buffer>0 and not plr.jumping and plr.grounded then --doesnt check grounded
+  if plr.jmp_buffer>0 and not plr.jumping and plr.coy_time > 0 then --doesnt check grounded
     add_dust(plr.x,plr.y+8)
     add_dust(plr.x+7,plr.y+8)
     plr.jumping = true

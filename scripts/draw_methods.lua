@@ -47,6 +47,7 @@ function draw_debug()
   print(my)
   print(lvl)
   print(level_timer)
+  print(plr.coy_time)
   for e in all(entities) do
     if e.box then
       rrect(e.box.x,e.box.y,e.box.w,e.box.h)
@@ -56,6 +57,16 @@ function draw_debug()
   end
   for o in all(objects) do
     rect(o.x,o.y,o.x+o.w,o.y+o.h,11)
+  end
+end
+
+function draw_curve(a,b,c,size,col)
+  local scale_factor = 1/size
+  for i=0,size do
+    local t = i*scale_factor
+    local x = (1-t)*(1-t)*a[1] + 2*(1-t)*t*b[1] + t*t*c[1]
+    local y = (1-t)*(1-t)*a[2] + 2*(1-t)*t*b[2] + t*t*c[2]
+    pset(x,y,col)
   end
 end
 

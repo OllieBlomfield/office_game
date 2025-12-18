@@ -60,6 +60,7 @@ function menu_draw()
         circ(63,63,intro_circle_size - 1 , 7)
     end
 
+    --draw_curve({10,90},{30,64},{50,90},20,5)
     
 end
 

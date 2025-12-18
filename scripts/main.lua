@@ -1,6 +1,6 @@
 function _init()
   t=0
-  lvl = 10
+  lvl = 1
   level_timer = 0
   debug_menu=false
   
