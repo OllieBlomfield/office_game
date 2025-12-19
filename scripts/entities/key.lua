@@ -15,6 +15,7 @@ function key_update(e)
     if not e.following and coll(plr,e) then
         key_collected = true
         e.following = true
+        add_pop(current_lvl[2][1]+4,current_lvl[2][2]+8,{1,0})
     end
 
     if e.following then

@@ -37,6 +37,11 @@ function spike_draw(e)
         line(e.x-1,e.y+3,e.x+6,e.y+3,8)
         spr(5,e.x-1,e.y-2,1,0.625)
     elseif e.state==2 then
-        spr(5,e.x-1,e.y-4)
+        if e.attack_time < 5 then
+            line(e.x-1,e.y+3,e.x+6,e.y+3,8)
+            spr(5,e.x-1,e.y-2,1,0.625)
+        else
+            spr(5,e.x-1,e.y-4)
+        end
     end
 end

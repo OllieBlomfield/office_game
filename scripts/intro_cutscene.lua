@@ -2,20 +2,25 @@ function intro_init()
     update = intro_update
     draw = intro_draw
     t=0
+
+    fizz = 0
     current_intro_screen = 1
     intro_scene_state = 0 --0 trans in, 1 show intro screen, 2 trans out, 3 to game
     fade_in = 20
     intro_scenes = {
-        {"there once was a little fellow", function() spr(1,30,30) end},
-        {"named johnathen bellow haha good times fun times init hha luv", 
+        {"jimbo was working hard.", function() spr(t%40>20 and 32 or 34,80,44) map(0,16,28,29,9,4) end},
+        {"but not hard enough!",
         function()
+            --map(0,16,28,29,9,4)
+            map(0,16,28,29,9,4,0x40)
+            clip(28,29,72,32)
             for i=7,2,-1 do
                 local cl = flr(t/20)
                 --local c = i==1 and 1 or i==2 and 7 or ({8,9,2})[(cl-i)%3+1]
                 local c = ({8,9,2})[(cl-i)%3+1]
                 --{8,9,2}{11,8,12}
-                local x_center = 64
-                local y_center = 64
+                local x_center = 45
+                local y_center = 46
                 local x = x_center + 1 - i*2 + 3*cos((t+3*i)/120)
                 local y = y_center + 6 - i*3 + 3*sin((t+3*i)/120)
                 rrectfill(
@@ -27,9 +32,20 @@ function intro_init()
                     c
                 )
             end
-            spr_r(1,40,40,4*t%360,1,1)
+            --print(flr(fizz),14,20)
+            --fizz+=0.05
+            spr_r(16,44,44,4*t%360,1,1)
+            map(0,16,28,29,9,4,0x3)
          end},
-        {"WOWZA IM SO COOL INIT BRUV", function() end}
+        {"jimbo must be punished", function()
+            clip(28,29,72,32)
+            map(0,20,28,29,9,4)
+            local sp_modifier = t%30>15 and 1 or 0
+            spr(1,37,45,0.75,1,t%60>30)
+            lava_draw({x=68,y=54})
+            lava_draw({x=76,y=54})
+            line(64,60,84,60,1)
+        end}
     }
 end
 
@@ -39,7 +55,7 @@ function intro_update()
         fade_in = max(fade_in-0.5,0)
         if fade_in==0 then intro_scene_state=1 end
     elseif intro_scene_state==1 then
-        if btnp(4) then
+        if btnp(5) then
             intro_scene_state=2
         end
     elseif intro_scene_state==2 then
@@ -57,14 +73,19 @@ end
 
 function intro_draw()
     cls(1)
-    fade(fade_in)
+    if intro_scene_state==1 then
+        set_pal()
+    else
+        fade(fade_in)
+    end
 
     clip(14,20,100,50)
     rrectfill(14,20,100,50,3,7)
     draw_background()
     intro_scenes[current_intro_screen][2]()
     clip()
-    para_print(intro_scenes[current_intro_screen][1],76,6)
+    --para_print(intro_scenes[current_intro_screen][1],76,6)
+    center_print(intro_scenes[current_intro_screen][1],76,6)
     --print(intro_scenes[current_intro_screen][1],24,70,6)
     --print("❎",x+2,y-6)
 

@@ -7,11 +7,11 @@ function collide_map(obj,aim,flag)
     if aim=="left" then
       x1,y1,x2,y2=x-1,y,x,y+h-1
     elseif aim=="right" then
-      x1,y1,x2,y2=x+w-1,y,x+w,y+h-1
+      x1,y1,x2,y2=x+w,y,x+w-1,y+h-1
     elseif aim=="up" then
-      x1,y1,x2,y2=x+2,y-1,x+w-3,y
+      x1,y1,x2,y2=x,y-1,x+w-1,y
     elseif aim=="down" then
-      x1,y1,x2,y2=x+2,y+h,x+w-3,y+h
+      x1,y1,x2,y2=x,y+h,x+w-1,y+h
     end
 
     --pixels to tiles

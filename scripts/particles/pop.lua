@@ -1,4 +1,5 @@
-function add_pop(x,y)
+function add_pop(x,y,c)
+    c = c or {15,15,1,1,13,8}
     for i=1,60 do
         --al = al or 0
         --v = v or 0
@@ -7,7 +8,7 @@ function add_pop(x,y)
             y=y,
             vx=rnd(1.2)-0.6,
             vy=rnd(1.2),
-            c=rnd({15,15,1,1,13,8}),
+            c=rnd(c),
             l=rnd(50),
             update=pop_update,
             draw=pop_draw

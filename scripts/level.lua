@@ -8,17 +8,17 @@ function()
   print("EXIT",80,13)
   spr(68,96,13)
 end}
-levels[2] = {{16,112}, {104,8}, "now spikes",20}
+levels[2] = {{16,112}, {108,8}, "now spikes",20}
 levels[3] = {{16,112}, {12,8}, "stop n' start",20}
-levels[4] = {{16,112}, {104,16}, "grab the key!",20}
-levels[5] = {{9,112}, {110,8}, "don't stop",20}
-levels[6] = {{9,112}, {10,8}, "rebound",20}
-levels[7] = {{61,112}, {86,24}, "ghosts n' ghouls",20}
+levels[4] = {{9,112}, {104,8}, "don't stop",20}
+levels[5] = {{16,112}, {104,16}, "grab the key!",20}
+levels[6] = {{9,112}, {12,16}, "rebound",20}
+levels[7] = {{61,112}, {84,24}, "ghosts n' ghouls",20}
 levels[8] = {{16,112}, {110,24}, "fragile stuff",20}
-levels[9] = {{16,64}, {10,104}, "end of demo :)",20}
+levels[9] = {{16,64}, {12,104}, "end of demo :)",20}
 levels[10] = {{104,104}, {12,8}, "hot stuff",20}
-levels[11] = {{16,64}, {10,104}, "test2",20}
-levels[12] = {{16,64}, {10,104}, "test",20} --at 3 possible stars for beating level in certain time
+levels[11] = {{16,112}, {108,8}, "test2",20}
+levels[12] = {{16,112}, {110,104}, "test",20} --at 3 possible stars for beating level in certain time
 
 function reset_level() --fix mx and my
     level_state = 0 --0 intro, 1 playing, 2 clear
@@ -101,7 +101,13 @@ end
 
 function level_update()
     t+=1
-
+    for p in all(particles) do
+      p.update(p)
+      p.l-=1
+      if p.l <= 0 then
+        del(particles,p)
+      end
+    end
     if level_state==0 then
       level_intro()
     elseif level_state==1 then
@@ -110,7 +116,7 @@ function level_update()
       level_outro()
     end
 
-    if btnp(5) then
+    if btnp(4) then
       debug_menu = not debug_menu
     end
 end 

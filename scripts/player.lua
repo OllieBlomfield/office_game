@@ -1,6 +1,6 @@
 function plr_init(x,y)
   SLOW_GRAVITY = 0.05
-  NORMAL_GRAVITY = 0.14
+  NORMAL_GRAVITY = 0.17
   MAX_Y_VELOCITY = 2
   NO_STOP_AMOUNT = 33
   COYOTE_TIME = 12
@@ -34,7 +34,6 @@ end
 
 function plr_update()
   handle_gravity()
-
   plr.no_stop_delay = max(plr.no_stop_delay-1, 0)
 
   if plr.state==0 then
@@ -44,6 +43,8 @@ function plr_update()
   elseif plr.state==2 then
     plr_death_state()
   end
+
+  
 
   plr.x += plr.dx
   plr.y -= plr.dy
@@ -69,7 +70,7 @@ function plr_draw()
 end
 
 function handle_gravity()
-  plr.already_hit_on_y = false
+  --plr.already_hit_on_y = false
   if plr.jumpheld then
     plr.gravity = SLOW_GRAVITY
   else
@@ -84,7 +85,7 @@ function handle_gravity()
   end
 
   if (collide_map(plr,"down",1) or plr.y+plr.h>=127) and plr.dy <= 0 then
-    if not plr.grounded then plr.already_hit_on_y = true end
+    --if not plr.grounded then plr.already_hit_on_y = true end
     plr.dy = 0
     plr.y-=((plr.y+plr.h+1)%8)-1
     plr.grounded = true
@@ -101,7 +102,7 @@ function plr_move_state()
 
   if t%20>14 and plr.grounded then add_dust(plr.x+3,plr.y+8) end
 
-  if btnp(4) then plr.jmp_buffer = 6 else plr.jmp_buffer -= 1 end
+  if btnp(5) then plr.jmp_buffer = 6 else plr.jmp_buffer -= 1 end
 
   if plr.jmp_buffer>0 and not plr.jumping and plr.coy_time > 0 then --doesnt check grounded
     add_dust(plr.x,plr.y+8)
@@ -112,7 +113,7 @@ function plr_move_state()
     plr.gravity = SLOW_GRAVITY
   end
 
-  if plr.jumpheld and not btn(4) then plr.jumpheld=false end
+  if plr.jumpheld and not btn(5) then plr.jumpheld=false end
 
   if (collide_map(plr,"up",0) or plr.x<0) and plr.dy>0 then
     plr.dy = 0
@@ -120,10 +121,10 @@ function plr_move_state()
   end
 
 
-  if (collide_map(plr,"left",0) and not plr.already_hit_on_y) or plr.x<0 then
+  if collide_map(plr,"left",0) or plr.x<0 then
       plr.dir=1
   end
-  if (collide_map(plr,"right",0) and not plr.already_hit_on_y) or plr.x>128-plr.w then
+  if collide_map(plr,"right",0) or plr.x>128-plr.w then
       plr.dir=-1
   end
   
@@ -166,7 +167,7 @@ function plr_death_state()
     add_pop(plr.x+4,plr.y+4)
     plr.death_state=3
   elseif plr.death_state==3 then
-    if btnp(4) then transition_out_level() end
+    if btnp(5) then transition_out_level() end
   end
 end
 

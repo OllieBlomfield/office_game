@@ -29,7 +29,7 @@ function transition_draw()
     end
     --fillp()
     spr(({33,34,35,34})[1+(transition_anim_time%60\15)],transition_anim_time,60)
-    print(lvl-1,3,52,7)
-    print(lvl,123,52,7)
+    --print(lvl-1,3,52,13)
+    --print(lvl,123,52,13)
     --draw_foreground()
 end

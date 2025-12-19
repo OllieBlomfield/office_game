@@ -5,7 +5,7 @@ function menu_init()
     fade_in = 20
     options = {"play"}
     logo_offset_y = 0
-    new_game = false
+    new_game = true
     menu_state = 1 --0 credits, 1 logo, 2 game transition, 3 intro transition
     menu_credit_fade_state = 0 --0 fade_in, 1 fade out
 
@@ -29,7 +29,7 @@ function menu_update()
         end
     elseif menu_state==1 then
         fade_in = max(0, fade_in-0.5)
-        if btnp(4) and fade_in==0 then menu_state = new_game and 3 or 2 end
+        if btnp(5) and fade_in==0 then menu_state = new_game and 3 or 2 end
     elseif menu_state==2 then
         logo_offset_y-=6
         if logo_offset_y < -60 then

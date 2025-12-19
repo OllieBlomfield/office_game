@@ -88,7 +88,7 @@ function exit_draw(e)
     else
         spr(21,e.x,e.y-1,1,0.125)
         rrect(e.x,e.y,e.w,e.h+1,0,1)
-        rrect(e.x,e.y,e.w,e.h+1,2,1)
+        rrectfill(e.x,e.y,e.w,e.h+1,2,1)
         spr(65,e.x,e.y+1,1,2)
     end
 end

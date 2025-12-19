@@ -1,4 +1,4 @@
-ENEMY_SPEED = 0.15
+ENEMY_SPEED = 0.1
 
 function add_enemy(x,y, start_dir)
     add(entities,{
@@ -12,11 +12,13 @@ function add_enemy(x,y, start_dir)
         dir=start_dir,
         update=enemy_update,
         draw=enemy_draw,
+        box={x=x,y=y+2,w=6,h=6}
     })
 end
 
 function enemy_update(enemy)
-    damage_plr_on_hit(enemy)
+    enemy.box = {x=enemy.x,y=enemy.y+3,w=6,h=5}
+    damage_plr_on_hit(enemy.box)
 
     enemy.dx=ENEMY_SPEED*enemy.dir
 
