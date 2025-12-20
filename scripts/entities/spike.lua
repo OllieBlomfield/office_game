@@ -15,7 +15,7 @@ function spike_update(e)
     e.attack_time = max(0,e.attack_time-1)
 
     if coll(plr,e) then
-        if e.state==0 then e.state=1 end
+        if e.state==0 then e.state=1 sfx_time = 0 play_sfx(3,12) end
         if e.state==2 then plr_damage() end
     end
 

@@ -18,7 +18,11 @@ levels[8] = {{16,112}, {110,24}, "fragile stuff",20}
 levels[9] = {{16,64}, {12,104}, "end of demo :)",20}
 levels[10] = {{104,104}, {12,8}, "hot stuff",20}
 levels[11] = {{16,112}, {108,8}, "test2",20}
-levels[12] = {{16,112}, {110,104}, "test",20} --at 3 possible stars for beating level in certain time
+levels[12] = {{10,112}, {110,104}, "test",20} --at 3 possible stars for beating level in certain time
+levels[13] = {{17,8}, {12,104}, "test",20}
+levels[14] = {{10,112}, {110,104}, "test",20}
+levels[15] = {{10,112}, {110,104}, "test",20}
+levels[16] = {{10,112}, {110,104}, "test",20}
 
 function reset_level() --fix mx and my
     level_state = 0 --0 intro, 1 playing, 2 clear

@@ -60,6 +60,7 @@ function plr_draw()
   if plr.state==1 then
     if plr.dy==0 then
       sp = ({33,34,35,34})[1+(t%60\15)]
+      if sp==34 then play_sfx(0,10) end
     end
   -- elseif plr.state==0 then
   --   sp = ({32,34})[1+(t%60\30)]
@@ -105,6 +106,8 @@ function plr_move_state()
   if btnp(5) then plr.jmp_buffer = 6 else plr.jmp_buffer -= 1 end
 
   if plr.jmp_buffer>0 and not plr.jumping and plr.coy_time > 0 then --doesnt check grounded
+    sfx_time=0
+    play_sfx(1,2)
     add_dust(plr.x,plr.y+8)
     add_dust(plr.x+7,plr.y+8)
     plr.jumping = true
@@ -123,9 +126,13 @@ function plr_move_state()
 
   if collide_map(plr,"left",0) or plr.x<0 then
       plr.dir=1
+      sfx_time=0
+      play_sfx(4,5)
   end
   if collide_map(plr,"right",0) or plr.x>128-plr.w then
       plr.dir=-1
+      sfx_time=0
+      play_sfx(4,5)
   end
   
 

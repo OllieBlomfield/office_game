@@ -28,6 +28,8 @@ end
 function exit_update(e)
     e.active = (not level_has_key) or (level_has_key and key_collected)
     if coll(plr,e.box) and e.active then
+        sfx_time=0
+        play_sfx(2,30)
         next_level()
     end
 end

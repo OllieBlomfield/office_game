@@ -6,7 +6,7 @@ function menu_init()
     options = {"play"}
     logo_offset_y = 0
     new_game = true
-    menu_state = 1 --0 credits, 1 logo, 2 game transition, 3 intro transition
+    menu_state = 0 --0 credits, 1 logo, 2 game transition, 3 intro transition
     menu_credit_fade_state = 0 --0 fade_in, 1 fade out
 
     --intro_transition vars

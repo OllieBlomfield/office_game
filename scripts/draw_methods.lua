@@ -46,7 +46,7 @@ function draw_debug()
   print(mx)
   print(my)
   print(lvl)
-  print(level_timer)
+  print(sfx_time)
   print(plr.coy_time)
   for e in all(entities) do
     if e.box then
