@@ -40,6 +40,7 @@ __lua__
 --make menu cooler (LERPING)
 --level transition smoother (quick fade before level)
 --introduce lava earlier
+--edit levels
 
 
 --extras:
