@@ -85,7 +85,8 @@ function intro_draw()
     intro_scenes[current_intro_screen][2]()
     clip()
     --para_print(intro_scenes[current_intro_screen][1],76,6)
-    center_print(intro_scenes[current_intro_screen][1],76,6)
+    local px,py = center_print(intro_scenes[current_intro_screen][1],76,6)
+    if t>120 then print("\^o0ff❎continue",86,118,7) end
     --print(intro_scenes[current_intro_screen][1],24,70,6)
     --print("❎",x+2,y-6)
 

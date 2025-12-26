@@ -9,7 +9,11 @@ function()
   spr(68,96,13)
 end}
 levels[2] = {{16,112}, {108,8}, "now spikes",20}
-levels[3] = {{16,112}, {12,8}, "stop n' start",20}
+levels[3] = {{16,112}, {12,8}, "stop n' start",20,
+function()
+  print("AVOID!",72,64,13)
+end
+}
 levels[4] = {{9,112}, {104,8}, "don't stop",20}
 levels[5] = {{16,112}, {104,16}, "grab the key!",20}
 levels[6] = {{9,112}, {12,16}, "rebound",20}
@@ -18,9 +22,9 @@ levels[8] = {{16,112}, {110,24}, "fragile stuff",20}
 levels[9] = {{16,64}, {12,104}, "end of demo :)",20}
 levels[10] = {{104,104}, {12,8}, "hot stuff",20}
 levels[11] = {{16,112}, {108,8}, "test2",20}
-levels[12] = {{10,112}, {110,104}, "test",20} --at 3 possible stars for beating level in certain time
+levels[12] = {{104,48}, {104,8}, "test",20} --at 3 possible stars for beating level in certain time
 levels[13] = {{17,8}, {12,104}, "test",20}
-levels[14] = {{10,112}, {110,104}, "test",20}
+levels[14] = {{16,112}, {108,8}, "test2",20}
 levels[15] = {{10,112}, {110,104}, "test",20}
 levels[16] = {{10,112}, {110,104}, "test",20}
 

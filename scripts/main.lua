@@ -1,6 +1,6 @@
 function _init()
   t=0
-  lvl = 1
+  lvl = 12
   sfx_time = 0
   level_timer = 0
   debug_menu=false
