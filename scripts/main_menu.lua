@@ -2,7 +2,7 @@ function new_game()
     lvl = 1
     max_level = 1
     new_game = true
-    out_func = intro_init
+    out_func = intro_cutscene
     menu_state = 3
     --level_init()
 end
@@ -19,7 +19,8 @@ end
 
 def_options = {{"continute",continue},{"new game", new_game}, {"level select",level_select}}
 
-function menu_init()
+function menu_init(def_state)
+    def_state = def_state or 1
     update = menu_update
     draw = menu_draw
     
@@ -33,7 +34,7 @@ function menu_init()
     if new_game then
         options = {def_options[2]}
     end
-    menu_state = 0 --0 credits, 1 logo, 2 logo move transition, 3 fade out transition
+    menu_state = def_state --0 credits, 1 logo, 2 logo move transition, 3 fade out transition
     menu_credit_fade_state = 0 --0 fade_in, 1 fade out
 
     --intro_transition vars

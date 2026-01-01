@@ -18,7 +18,7 @@ function level_select_init()
     end
 
     unlocked_levels = max_level
-    selected_level = lvl
+    selected_level = min(lvl,15)
     loc_x = level_positions[selected_level][1]
     loc_y = level_positions[selected_level][2]
 

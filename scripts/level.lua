@@ -18,8 +18,8 @@ levels[4] = {{9,112}, {104,8}, "don't stop",20}
 levels[5] = {{16,112}, {104,16}, "grab the key!",20}
 levels[6] = {{9,112}, {12,16}, "rebound",20}
 levels[7] = {{61,112}, {84,24}, "ghosts n' ghouls",20}
-levels[8] = {{16,112}, {110,24}, "droptop",20}
-levels[9] = {{16,64}, {12,104}, "end of demo :)",20}
+levels[8] = {{16,112}, {110,24}, "fragile stuff",20}
+levels[9] = {{16,64}, {12,104}, "droptop",20}
 levels[10] = {{104,104}, {12,8}, "hot stuff",20}
 levels[11] = {{16,112}, {108,8}, "go go go!",20}
 levels[12] = {{104,48}, {104,8}, "key-loop",20} --at 3 possible stars for beating level in certain time
@@ -27,7 +27,8 @@ levels[13] = {{14,104}, {108,8}, "keep jumping",20}
 levels[14] = {{16,112}, {108,8}, "double trouble",20}
 levels[15] = {{10,112}, {110,104}, "the finale",20}
 
-function reset_level() --fix mx and my
+function reset_level()
+    lvl = min(lvl,15) --probably better way to do this but this works as hot fix.
     level_state = 0 --0 intro, 1 playing, 2 clear
     mx = ((lvl-1)%8)*16
     my = 48*((lvl-1)\8)
@@ -92,7 +93,9 @@ function level_outro()
   -- end
   level_anim_time = level_anim_start_time - t
   if level_anim_time < -2 then
-    if level_cleared then
+    if lvl>=16 then
+      outro_cutscene()
+    elseif level_cleared then
       if lvl>max_level and lvl<=15 then
         max_level=lvl
       end

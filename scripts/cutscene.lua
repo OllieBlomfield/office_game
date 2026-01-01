@@ -1,13 +1,4 @@
-function intro_init()
-    update = intro_update
-    draw = intro_draw
-    t=0
-
-    fizz = 0
-    current_intro_screen = 1
-    intro_scene_state = 0 --0 trans in, 1 show intro screen, 2 trans out, 3 to game
-    fade_in = 20
-    intro_scenes = {
+intro_scenes = {
         {"jimbo was working hard.", function() spr(t%40>20 and 32 or 34,80,44) map(0,16,28,29,9,4) end},
         {"but not hard enough!",
         function()
@@ -45,35 +36,53 @@ function intro_init()
             lava_draw({x=68,y=54})
             lava_draw({x=76,y=54})
             line(64,60,84,60,1)
-        end}
-    }
+        end},
+        level_init
+}
+
+outro_scenes = {
+    {"GOOOD JOB", function() end},
+    menu_init
+}
+
+function cutscene_init(content)
+    scenes = content
+    update = cutscene_update
+    draw = cutscene_draw
+    t=0
+
+    fizz = 0
+    current_screen = 1
+    cutscene_state = 0 --0 trans in, 1 show intro screen, 2 trans out, 3 to game
+    fade_in = 20
+    
 end
 
-function intro_update()
+function cutscene_update()
     t+=1
-    if intro_scene_state==0 then
+    if cutscene_state==0 then
         fade_in = max(fade_in-0.5,0)
-        if fade_in==0 then intro_scene_state=1 end
-    elseif intro_scene_state==1 then
+        if fade_in==0 then cutscene_state=1 end
+    elseif cutscene_state==1 then
         if btnp(5) then
-            intro_scene_state=2
+            cutscene_state=2
         end
-    elseif intro_scene_state==2 then
+    elseif cutscene_state==2 then
         fade_in = min(fade_in+0.5,18)
         if fade_in==18 then
-            current_intro_screen+=1
-            if current_intro_screen > #intro_scenes then
-                level_init()
+            current_screen+=1
+            if current_screen > #scenes-1 then
+                scenes[#scenes]()
             else
-                intro_scene_state=0
+                cutscene_state=0
             end
         end
     end
 end
 
-function intro_draw()
+function cutscene_draw()
     cls(1)
-    if intro_scene_state==1 then
+    if cutscene_state==1 then
         set_pal()
     else
         fade(fade_in)
@@ -82,18 +91,11 @@ function intro_draw()
     clip(14,20,100,50)
     rrectfill(14,20,100,50,3,7)
     draw_background()
-    intro_scenes[current_intro_screen][2]()
+    scenes[current_screen][2]()
     clip()
-    --para_print(intro_scenes[current_intro_screen][1],76,6)
-    local px,py = center_print(intro_scenes[current_intro_screen][1],76,6)
+    
+    local px,py = center_print(scenes[current_screen][1],76,6)
     if t>120 then print("\^o0ff❎continue",86,118,7) end
-    --print(intro_scenes[current_intro_screen][1],24,70,6)
-    --print("❎",x+2,y-6)
-
-
-
-    -- fade(0)
-    -- draw_foreground()
 end
 
 fadeTable={
@@ -124,4 +126,12 @@ function fade(i)
    pal(c,fadeTable[c+1][flr(i+1)])
   end
  end
+end
+
+function intro_cutscene()
+    cutscene_init(intro_scenes)
+end
+
+function outro_cutscene()
+    cutscene_init(outro_scenes)
 end

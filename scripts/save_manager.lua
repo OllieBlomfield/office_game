@@ -7,7 +7,7 @@ end
 function load_game()
     max_level = min(dget(2),15)
     lvl = min(dget(1),15)
-    --lvl = 7
+    --lvl = 15
     new_game = false
 end
 

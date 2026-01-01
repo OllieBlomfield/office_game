@@ -12,7 +12,7 @@ function _init()
   level_timer = 0
   debug_menu=false
   
-  menu_init()
+  menu_init(0)
 end
 
 function _update60()
