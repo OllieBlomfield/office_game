@@ -1,5 +1,6 @@
 function new_game()
     lvl = 1
+    max_level = 1
     new_game = true
     out_func = intro_init
     menu_state = 3
@@ -7,7 +8,7 @@ function new_game()
 end
 
 function level_select()
-    menu_state = 3
+    menu_state = 2
     out_func = level_select_init
 end
 
@@ -27,12 +28,12 @@ function menu_init()
     out_func = level_init
     current_selection = 1
     logo_offset_y = 0
-    new_game = false
+    --new_game = true
 
     if new_game then
         options = {def_options[2]}
     end
-    menu_state = 1 --0 credits, 1 logo, 2 logo move transition, 3 fade out transition
+    menu_state = 0 --0 credits, 1 logo, 2 logo move transition, 3 fade out transition
     menu_credit_fade_state = 0 --0 fade_in, 1 fade out
 
     --intro_transition vars
@@ -58,7 +59,7 @@ function menu_update()
 
         if btnp(3) then current_selection = min(current_selection+1,#options) end
 
-        if btnp(2) then current_selection = max(0,current_selection-1) end
+        if btnp(2) then current_selection = max(1,current_selection-1) end
 
         if btnp(5) and fade_in==0 then options[current_selection][2]() end
     elseif menu_state==2 then
@@ -88,6 +89,7 @@ function menu_draw()
         for i=1,#options do
             center_print(options[i][1],68+i*8,7,current_selection==i and "\^o0ff" or "")
         end
+        print("\^o0ff❎",-10+(128 - #options[current_selection][1]*4) / 2,68+current_selection*8,7)
         --center_print("x to "..(new_game and "start" or "continue"), 80, 7,"\^o0ff")
         draw_logo()
         circfill(63,63,intro_circle_size,1 | 0x1800)

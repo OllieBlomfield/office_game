@@ -1,6 +1,13 @@
 function _init()
+  cartdata("office_hell_ob")
   t=0
-  lvl = 12
+  max_level = 1
+  lvl = 1
+  new_game = true
+  if dget(0)!=0 then
+    load_game()
+  end
+
   sfx_time = 0
   level_timer = 0
   debug_menu=false
