@@ -6,13 +6,15 @@ function add_ghost(x,y)
         w=8,
         origin_y=y,
         update=ghost_update,
-        draw=ghost_draw
+        draw=ghost_draw,
+        box = {x = x+1, y=y+1,w=6,h=6}
     })
 end
 
 function ghost_update(e)
     e.y = e.origin_y + 16*sin(t/260)
-    damage_plr_on_hit(e)
+    e.box = {x = e.x+1, y=e.y+2,w=6,h=5}
+    damage_plr_on_hit(e.box)
 end
 
 function ghost_draw(e)

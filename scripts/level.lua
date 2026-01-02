@@ -108,6 +108,7 @@ function level_outro()
 end
 
 function level_init()
+  music(0)
   reset_level()
   update = level_update
   draw = level_draw

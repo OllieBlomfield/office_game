@@ -41,7 +41,17 @@ intro_scenes = {
 }
 
 outro_scenes = {
-    {"GOOOD JOB", function() end},
+    {"good job jimbo!", function() 
+        for i=0,4 do
+            lava_draw({x=12+8*i,y=54})
+        end
+        map(0,24,28,15,12,8)  
+        line(12,62,84,62,1)
+        print("EXIT",68,47,13)
+        spr(68,84,47)
+        spr(t%30>15 and 32 or 34,60,47)
+    end},
+    {"now you can get back to work",function() spr(t%40>20 and 1 or 2,80,44) map(0,16,28,29,9,4) end},
     menu_init
 }
 
@@ -55,7 +65,7 @@ function cutscene_init(content)
     current_screen = 1
     cutscene_state = 0 --0 trans in, 1 show intro screen, 2 trans out, 3 to game
     fade_in = 20
-    
+    music(1,30)
 end
 
 function cutscene_update()

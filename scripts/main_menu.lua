@@ -1,7 +1,7 @@
 function new_game()
     lvl = 1
     max_level = 1
-    new_game = true
+    new_game = false
     out_func = intro_cutscene
     menu_state = 3
     --level_init()
