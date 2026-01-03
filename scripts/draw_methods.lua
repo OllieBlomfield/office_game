@@ -47,7 +47,8 @@ function draw_debug()
   print(my)
   print(lvl)
   print(sfx_time)
-  print(plr.coy_time)
+  print(num_deaths)
+  print(game_timer)
   for e in all(entities) do
     if e.box then
       rrect(e.box.x,e.box.y,e.box.w,e.box.h)

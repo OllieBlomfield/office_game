@@ -116,6 +116,7 @@ end
 
 function level_update()
     t+=1
+    game_timer+=1/60
     for p in all(particles) do
       p.update(p)
       p.l-=1
@@ -152,8 +153,6 @@ function level_draw()
     if debug_menu then
       draw_debug()
     end
-
-    
     --print(plr.state)
     --print(#objects)
     

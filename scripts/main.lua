@@ -1,9 +1,7 @@
 function _init()
   cartdata("office_hell_ob")
   t=0
-  max_level = 1
-  lvl = 1
-  new_game = true
+  set_default_globals()
   if dget(0)!=0 then
     load_game()
   end

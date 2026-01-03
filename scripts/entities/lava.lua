@@ -31,6 +31,19 @@ end
 
 function lava_draw(e)
     --spr(23,e.x,e.y)
+    -- if rnd(10)>=9 then
+    --     add(particles, {
+    --             x=rnd(8)+e.x,
+    --             y=rnd(5)+e.y+3,
+    --             vx=rnd({-1,1})*rnd(0.2),
+    --             vy=rnd(0.3),
+    --             s=2,
+    --             l=45+rnd(20),
+    --             c=rnd({8,9,1}),
+    --             update=lava_particle_update,
+    --             draw=lava_particle_draw,
+    --         })
+    -- end
     for i=0,7 do
         -- pset(e.x+i,e.y-2*sin((t+e.x+i)/40),9)
         local y = 2*sin((t+e.x+i)/80) + sin((t/4+e.x+i)/20)

@@ -52,7 +52,20 @@ outro_scenes = {
         spr(t%30>15 and 32 or 34,60,47)
     end},
     {"now you can get back to work",function() spr(t%40>20 and 1 or 2,80,44) map(0,16,28,29,9,4) end},
-    menu_init
+    {"congratulations!!!", function() 
+        spr(70,40,38)
+        print(":"..num_deaths,48,40,1)
+        spr(72,40,48)
+        print(":"..game_timer.."s",48,50,1)
+        spr(1,61,60,0.75,1,t%60>30) 
+        spr(71,72,60,0.75,1,t%60>30) 
+        spr(71,50,60,0.75,1,t%60>30) 
+    end},
+    function()
+        set_default_globals()
+        dset(0,0)
+        menu_init()
+    end
 }
 
 function cutscene_init(content)
@@ -60,6 +73,7 @@ function cutscene_init(content)
     update = cutscene_update
     draw = cutscene_draw
     t=0
+    particles = {}
 
     fizz = 0
     current_screen = 1
@@ -70,6 +84,13 @@ end
 
 function cutscene_update()
     t+=1
+    for p in all(particles) do
+        p.update(p)
+        p.l-=1
+        if p.l <= 0 then
+        del(particles,p)
+        end
+    end
     if cutscene_state==0 then
         fade_in = max(fade_in-0.5,0)
         if fade_in==0 then cutscene_state=1 end
@@ -101,6 +122,7 @@ function cutscene_draw()
     clip(14,20,100,50)
     rrectfill(14,20,100,50,3,7)
     draw_background()
+    for p in all(particles) do p.draw(p) end
     scenes[current_screen][2]()
     clip()
     

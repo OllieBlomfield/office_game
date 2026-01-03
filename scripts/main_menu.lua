@@ -1,9 +1,11 @@
 function new_game()
     lvl = 1
     max_level = 1
+    num_deaths = 0
     new_game = false
     out_func = intro_cutscene
     menu_state = 3
+    save_game(lvl)
     --level_init()
 end
 

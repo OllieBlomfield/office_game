@@ -161,6 +161,8 @@ function plr_death_state()
   plr.dy=0
   if plr.death_state==0 then --start
     plr.death_anim_start_time = t
+    num_deaths += 1
+    save_game(lvl)
     plr.death_state=1
   elseif plr.death_state==1 then --shaking
     plr.draw_offset_x=rnd(1)-0.5
@@ -172,6 +174,7 @@ function plr_death_state()
   elseif plr.death_state==2 then --explode
     plr.visible = false
     add_pop(plr.x+4,plr.y+4)
+    add_level_title("❎ to try again",1)
     plr.death_state=3
   elseif plr.death_state==3 then
     if btnp(5) then transition_out_level() end
