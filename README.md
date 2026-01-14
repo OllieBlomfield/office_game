@@ -1,5 +1,7 @@
 # Office Hell Release V1.0
 
+Link to forum post on Pico 8 website: https://www.lexaloffle.com/bbs/?pid=181808#p
+
 ## Story
 Jimbo works in the big office building in the big city. He's a very hard worker. But the corporate gods in HR have determined him too lazy and banished poor Jimbo to **OFFICE HELL**! Our hero will have to navigate the endless office halls, dodging demons and ghosts of companies past if he hopes to ever see the real world once again...
 
