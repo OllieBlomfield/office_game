@@ -58,9 +58,9 @@ function plr_draw()
   end
 
   if plr.state==1 then
-    if plr.dy==0 then
+    if plr.dy==0 and level_state!=2 then --bad implementation but will do for now
       sp = ({33,34,35,34})[1+(t%60\15)]
-      if sp==34 then play_sfx(0,10) end
+      --if sp==34 then play_sfx(0,10) end
     end
   -- elseif plr.state==0 then
   --   sp = ({32,34})[1+(t%60\30)]
@@ -144,6 +144,7 @@ function plr_move_state()
 end
 
 function plr_stop_state()
+    plr.dy=min(plr.dy,0) --might cause issues, remove if undefined behaviour occurs
     if btnp(1) then
         plr.dir = 1
         plr.state = 1
@@ -164,6 +165,8 @@ function plr_death_state()
     num_deaths += 1
     save_game(lvl)
     plr.death_state=1
+    sfx(12)
+    play_song(-1,200)
   elseif plr.death_state==1 then --shaking
     plr.draw_offset_x=rnd(1)-0.5
     plr.draw_offset_y=rnd(1)-0.5
@@ -176,8 +179,9 @@ function plr_death_state()
     add_pop(plr.x+4,plr.y+4)
     add_level_title("❎ to try again",1)
     plr.death_state=3
+    sfx(13)
   elseif plr.death_state==3 then
-    if btnp(5) then transition_out_level() end
+    if btnp(5) then transition_out_level() sfx(14) end
   end
 end
 

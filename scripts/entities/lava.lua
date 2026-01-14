@@ -46,7 +46,7 @@ function lava_draw(e)
     -- end
     for i=0,7 do
         -- pset(e.x+i,e.y-2*sin((t+e.x+i)/40),9)
-        local y = 2*sin((t+e.x+i)/80) + sin((t/4+e.x+i)/20)
+        local y = 2*sin((t+e.x+i)/80) + sin((t/4+e.x+i)/20) + 1
         pset(e.x+i,e.y+y,10)
         line(e.x+i,e.y+1+y,e.x+i,e.y+8,9)
         line(e.x+i,e.y+4+y*0.5,e.x+i,e.y+8,8)

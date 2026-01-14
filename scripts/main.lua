@@ -27,3 +27,6 @@ end
 
 --{1,12,8,11,1}
 
+--extras:
+--collectible in each stage
+--custom hats (can be bought with collectables)

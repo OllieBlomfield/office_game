@@ -46,6 +46,7 @@ end
 
 function menu_update()
     if menu_state==0 then
+        play_song(-1,500)
         if menu_credit_fade_state==0 then
             fade_in = max(-15,fade_in-0.5)
             if fade_in==-15 then
@@ -58,13 +59,14 @@ function menu_update()
             end
         end
     elseif menu_state==1 then
+        play_song(4,500)
         fade_in = max(0, fade_in-0.5)
 
-        if btnp(3) then current_selection = min(current_selection+1,#options) end
+        if btnp(3) then current_selection = min(current_selection+1,#options) sfx(10) end
 
-        if btnp(2) then current_selection = max(1,current_selection-1) end
+        if btnp(2) then current_selection = max(1,current_selection-1) sfx(10) end
 
-        if btnp(5) and fade_in==0 then options[current_selection][2]() end
+        if btnp(5) and fade_in==0 then options[current_selection][2]() sfx(11) end
     elseif menu_state==2 then
         logo_offset_y-=6
         if logo_offset_y < -60 then
@@ -90,7 +92,7 @@ function menu_draw()
         circfill(64,67,70,0 | 0x1800)
         fillp()
         for i=1,#options do
-            center_print(options[i][1],68+i*8,7,current_selection==i and "\^o0ff" or "")
+             center_print(options[i][1],68+i*8,7,current_selection==i and "\^o0ff" or "")
         end
         print("\^o0ff❎",-10+(128 - #options[current_selection][1]*4) / 2,68+current_selection*8,7)
         --center_print("x to "..(new_game and "start" or "continue"), 80, 7,"\^o0ff")
@@ -104,9 +106,12 @@ function menu_draw()
 end
 
 function draw_logo()
-    spr(96,28,20 + logo_offset_y,9,2)
-    spr(73,37,30 + logo_offset_y,5,4)
-    spr(78,74,29 + logo_offset_y,2,4)
-    spr(78,86,29 + logo_offset_y,2,4)
+    --logo_offset_y = 16
+    spr(96,27,28 + logo_offset_y,9,2)
+    --rrect(28,20,71,16,0,8)
+
+    spr(73,35,38 + logo_offset_y,5,4)
+    spr(78,72,37 + logo_offset_y,2,4)
+    spr(78,84,37 + logo_offset_y,2,4)
 end
 

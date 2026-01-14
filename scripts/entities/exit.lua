@@ -21,15 +21,16 @@ function add_exit(x,y)
         draw=exit_draw,
         --particles=temp_particles,
         active=true,
-        box={x=x+1,y=y+4,w=6,h=11}
+        box={x=x+2,y=y+4,w=4,h=11}
     })
 end
 
 function exit_update(e)
     e.active = (not level_has_key) or (level_has_key and key_collected)
     if coll(plr,e.box) and e.active then
+        play_song(-1)
         sfx_time=0
-        play_sfx(2,30)
+        play_sfx(6,30)
         next_level()
     end
 end

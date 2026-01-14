@@ -6,7 +6,7 @@ function add_level_title(txt,mode) --mode 0 -> flies in and out, mode 1 flies in
         y=-10,
         w=8,
         h=8,
-        anim_length= mode==0 and 200 or 120,
+        anim_length= mode==0 and 200 or 135,
         anim_time=t,
         update = level_title_update,
         draw = level_title_draw,

@@ -34,6 +34,8 @@ function level_select_init()
 
     level_select_transition_start = 0
     level_select_transition_time = 0
+
+    play_song(4)
 end
 
 function level_select_update()
@@ -70,6 +72,9 @@ function level_select_draw()
         local col = i < unlocked_levels and 11 or (i == unlocked_levels and 9) or 8
         rrectfill(level_positions[i][1]*24+13,level_positions[i][2]*32+39,6,6,0,col)
     end
+
+    print("EXIT",104,110,6)
+    spr(83,120,110)
 
     spr(({33,34,35,34})[1+(t%60\15)],13+loc_x*24,34+loc_y*32)
 
@@ -169,6 +174,7 @@ function level_select_input()
         lvl = selected_level
         level_select_transition_start = t + 40
         level_select_state = 2
+        sfx(11)
     end
 end
 

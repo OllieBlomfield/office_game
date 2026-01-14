@@ -37,8 +37,40 @@ intro_scenes = {
             lava_draw({x=76,y=54})
             line(64,60,84,60,1)
         end},
+        {"once jimbo starts moving",function()
+            if costatus(tutorial)!="dead" then
+                coresume(tutorial)
+            else
+                tutorial = cocreate(tutorial_coroutine)
+            end
+            --line(0,58,128,58,1)
+            map(40,16,6,26,16,5)
+        end, "he will not stop!"},
         level_init
 }
+
+function tutorial_coroutine()
+    local x = 30
+    local y = 50
+    for i=1,40 do
+        spr(32,30,y)
+        print("⬅️",x-8,y+2,1)
+        print("➡️",x+7,y+2)
+        yield()
+    end
+    for i=1,150 do
+        local sp = ({33,34,35,34})[1+(i%60\15)]
+        spr(sp,x,y,0.875,1, i > 100)
+        if i > 100 then
+            x-=0.5
+        else
+            x+=0.5
+        end
+        yield()
+    end
+
+end
+--once given a direction, jimbo will keep going and not stop
 
 outro_scenes = {
     {"good job jimbo!", function() 
@@ -56,10 +88,12 @@ outro_scenes = {
         spr(70,40,38)
         print(":"..num_deaths,48,40,1)
         spr(72,40,48)
-        print(":"..game_timer.."s",48,50,1)
-        spr(1,61,60,0.75,1,t%60>30) 
+        local game_mins = game_timer\60
+        local game_seconds = (game_timer%60)\1
+        print(":"..game_mins..":"..(game_seconds<10 and "0" or "")..game_seconds,48,50,1)
+        spr(1,61,60,0.75,1,t%60>30)
         spr(71,72,60,0.75,1,t%60>30) 
-        spr(71,50,60,0.75,1,t%60>30) 
+        spr(71,50,60,0.75,1,t%60>30)
     end},
     function()
         set_default_globals()
@@ -79,7 +113,9 @@ function cutscene_init(content)
     current_screen = 1
     cutscene_state = 0 --0 trans in, 1 show intro screen, 2 trans out, 3 to game
     fade_in = 20
-    music(1,30)
+    play_song(1,800)
+
+    tutorial = cocreate(tutorial_coroutine)
 end
 
 function cutscene_update()
@@ -104,6 +140,8 @@ function cutscene_update()
             current_screen+=1
             if current_screen > #scenes-1 then
                 scenes[#scenes]()
+                play_song(-1,800)
+                sfx(14)
             else
                 cutscene_state=0
             end
@@ -127,7 +165,11 @@ function cutscene_draw()
     clip()
     
     local px,py = center_print(scenes[current_screen][1],76,6)
-    if t>120 then print("\^o0ff❎continue",86,118,7) end
+    if scenes[current_screen][3] then
+        center_print(scenes[current_screen][3],82,6)
+    end
+    --if t>120 then print("\^o0ff❎continue",86,118,7) end
+    print("\^o0ff❎continue",86,118,7)
 end
 
 fadeTable={

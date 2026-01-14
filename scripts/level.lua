@@ -57,18 +57,20 @@ end
 function next_level()
     lvl+=1
     level_cleared = true
-    transition_out_level()
+    transition_out_level(true)
 end
 
-function transition_out_level()
+function transition_out_level(pause)
+    pause = pause or false
     level_state = 2
-    level_anim_start_time = t + 40
+    level_anim_start_time = t + (pause and 100 or 40)
 end
 
 function level_intro()
   entity_update()
   level_anim_time = t - level_anim_start_time
   if level_anim_time > 60 then
+    play_song(4,500)
     level_state = 1
   end
 end
@@ -108,7 +110,6 @@ function level_outro()
 end
 
 function level_init()
-  music(0)
   reset_level()
   update = level_update
   draw = level_draw
@@ -116,7 +117,7 @@ end
 
 function level_update()
     t+=1
-    game_timer+=1/60
+    game_timer=min(32000,game_timer+1/60)
     for p in all(particles) do
       p.update(p)
       p.l-=1
@@ -132,9 +133,9 @@ function level_update()
       level_outro()
     end
 
-    if btnp(4) then
-      debug_menu = not debug_menu
-    end
+    -- if btnp(4) then
+    --   debug_menu = not debug_menu
+    -- end
 end 
 
 function level_draw()
@@ -150,9 +151,9 @@ function level_draw()
     for e in all(entities) do e.draw(e) end
     if plr.visible then plr_draw() end
     
-    if debug_menu then
-      draw_debug()
-    end
+    -- if debug_menu then
+    --   draw_debug()
+    -- end
     --print(plr.state)
     --print(#objects)
     
